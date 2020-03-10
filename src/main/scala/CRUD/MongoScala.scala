@@ -1,7 +1,8 @@
 package CRUD
+
 import org.mongodb.scala._
 import CRUD.Helpers._
-
+import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.{Completed, Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer}
 
 object MongoScala extends App {
@@ -38,9 +39,17 @@ object MongoScala extends App {
   } yield countResult
 
 
-  collection.find().first().printHeadResult()
+  // collection.find().first().printHeadResult()
 
-  collection.find().printResults()
+  // collection.find().printResults()
+
+
+  //  collection.find(equal("i", 71)).first().printHeadResult()
+
+  collection.find(and(gt("i", 50), lte("i", 100))).printResults()
+
+  // collection.deleteMany(gte("i", 100)).printHeadResult("Delete Result: ")
+
 
   // insertAndCount.head() onComplete {
   //   case Success(value) => println(value)
