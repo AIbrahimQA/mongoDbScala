@@ -7,6 +7,7 @@ import org.mongodb.scala.{Completed, Document, MongoClient, MongoCollection, Mon
 
 object MongoScala extends App {
 
+
   val mongoClient: MongoClient = MongoClient()
 
   val database: MongoDatabase = mongoClient.getDatabase("mydb")
@@ -15,7 +16,7 @@ object MongoScala extends App {
   val collection: MongoCollection[Document] = database.getCollection("test");
 
 
-  val doc: Document = Document("_id" -> 0, "name" -> "Ahmed", "type" -> "database",
+  val doc: Document = Document("_id" -> 0, "name" -> "Ahmed", "type" -> "Ibrahim",
     "count" -> 1, "info" -> Document("x" -> 203, "y" -> 102))
 
 
@@ -39,14 +40,43 @@ object MongoScala extends App {
   } yield countResult
 
 
-  // collection.find().first().printHeadResult()
+  def retrieveFirstMongo(): Unit = {
+    collection.find().first().printHeadResult()
 
-  // collection.find().printResults()
+  }
+
+  retrieveFirstMongo()
+
+  def retrieveAllMongo(): Unit = {
+    collection.find().printResults()
+
+  }
+
+  retrieveAllMongo()
+
+  def retrieveExactMongo(): Unit = {
+    collection.find(equal("i", 71)).first().printHeadResult()
+  }
+
+  retrieveExactMongo()
+
+  def retrieveRangeMongo(): Unit = {
+    collection.find(and(gt("i", 50), lte("i", 100))).printResults()
+  }
+
+  retrieveRangeMongo()
+
+
+  def deleteAllMongo(): Unit = {
+    collection.deleteMany(gte("i", 100)).printHeadResult("Delete Result: ")
+  }
+
+  deleteAllMongo()
 
 
   //  collection.find(equal("i", 71)).first().printHeadResult()
 
-  collection.find(and(gt("i", 50), lte("i", 100))).printResults()
+  //collection.find(and(gt("i", 50), lte("i", 100))).printResults()
 
   // collection.deleteMany(gte("i", 100)).printHeadResult("Delete Result: ")
 
