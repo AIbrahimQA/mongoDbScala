@@ -1,9 +1,8 @@
+package CRUD
 import org.mongodb.scala._
+import CRUD.Helpers._
 
-
-import scala.util.{Failure, Success}
-import scala.concurrent.ExecutionContext.Implicits.global
-
+import org.mongodb.scala.{Completed, Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer}
 
 object MongoScala extends App {
 
@@ -15,7 +14,7 @@ object MongoScala extends App {
   val collection: MongoCollection[Document] = database.getCollection("test");
 
 
-  val doc: Document = Document("_id" -> 0, "name" -> "MongoDB", "type" -> "database",
+  val doc: Document = Document("_id" -> 0, "name" -> "Ahmed", "type" -> "database",
     "count" -> 1, "info" -> Document("x" -> 203, "y" -> 102))
 
 
@@ -38,16 +37,21 @@ object MongoScala extends App {
     countResult <- collection.countDocuments()
   } yield countResult
 
-  insertAndCount.head() onComplete {
-    case Success(value) => println(value)
-    case Failure(exception) => println(x = "error" + exception.getMessage)
-  }
+
+  collection.find().first().printHeadResult()
+
+  collection.find().printResults()
+
+  // insertAndCount.head() onComplete {
+  //   case Success(value) => println(value)
+  //    case Failure(exception) => println(x = "error" + exception.getMessage)
+  // }
 
 
-  collection.find().first().head() onComplete {
-    case Success(value) => println(value)
-    case Failure(exception) => println(x = "error" + exception.getMessage)
-  }
+  //  collection.find().head() onComplete {
+  //   case Success(value) => println(value)
+  //  case Failure(exception) => println(x = "error" + exception.getMessage)
+  //}
   Thread.sleep(5000)
 
 
